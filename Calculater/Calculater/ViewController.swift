@@ -10,9 +10,16 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var displayLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    @IBOutlet weak var pressOne: UIButton!
+    @IBAction func pressPoint(sender: AnyObject) {
+    }
+    @IBAction func pressZero(sender: AnyObject) {
     }
 
     override func didReceiveMemoryWarning() {
