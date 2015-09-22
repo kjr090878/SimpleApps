@@ -191,15 +191,15 @@
                                     <action selector="setOperation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yTZ-fB-UVt"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mDn-8E-9O7">
-                                <rect key="frame" x="0.0" y="168" width="80" height="80"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GuR-6l-uay">
+                                <rect key="frame" x="80" y="168" width="80" height="80"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="mDn-8E-9O7" secondAttribute="height" multiplier="1:1" id="YN9-B4-ykt"/>
+                                    <constraint firstAttribute="width" secondItem="GuR-6l-uay" secondAttribute="height" multiplier="1:1" id="Wzt-56-8m3"/>
                                 </constraints>
-                                <state key="normal" title="AC"/>
+                                <state key="normal" title="+/-"/>
                                 <connections>
-                                    <action selector="clear" destination="BYZ-38-t0r" eventType="touchUpInside" id="lLg-pD-8Ga"/>
+                                    <action selector="changeSign" destination="BYZ-38-t0r" eventType="touchUpInside" id="mG3-XI-ZhF"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0kc-Qf-k05">
@@ -236,10 +236,22 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rQD-hT-MrT">
+                                        <rect key="frame" x="20" y="78" width="42" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="42" id="8BS-3e-ViL"/>
+                                            <constraint firstAttribute="height" constant="60" id="KJD-sF-o6J"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="rQD-hT-MrT" secondAttribute="bottom" constant="10" id="G7S-Fy-IE4"/>
                                     <constraint firstAttribute="bottom" secondItem="ReG-sM-4xT" secondAttribute="bottom" constant="10" id="H7R-la-850"/>
+                                    <constraint firstItem="rQD-hT-MrT" firstAttribute="leading" secondItem="jpD-Am-fFF" secondAttribute="leading" constant="20" id="fRr-oj-wAe"/>
                                     <constraint firstAttribute="trailing" secondItem="ReG-sM-4xT" secondAttribute="trailing" constant="20" id="mJ5-DA-YsE"/>
                                     <constraint firstItem="ReG-sM-4xT" firstAttribute="leading" secondItem="jpD-Am-fFF" secondAttribute="leading" constant="20" id="tBM-56-NHm"/>
                                 </constraints>
@@ -255,15 +267,15 @@
                                     <action selector="numberPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="VWh-xH-9PV"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GuR-6l-uay">
-                                <rect key="frame" x="80" y="168" width="80" height="80"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mDn-8E-9O7">
+                                <rect key="frame" x="0.0" y="168" width="80" height="80"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="GuR-6l-uay" secondAttribute="height" multiplier="1:1" id="Wzt-56-8m3"/>
+                                    <constraint firstAttribute="width" secondItem="mDn-8E-9O7" secondAttribute="height" multiplier="1:1" id="YN9-B4-ykt"/>
                                 </constraints>
-                                <state key="normal" title="+/-"/>
+                                <state key="normal" title="AC"/>
                                 <connections>
-                                    <action selector="changeSign" destination="BYZ-38-t0r" eventType="touchUpInside" id="mG3-XI-ZhF"/>
+                                    <action selector="clear" destination="BYZ-38-t0r" eventType="touchUpInside" id="lLg-pD-8Ga"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -350,11 +362,12 @@
                     <size key="freeformSize" width="320" height="568"/>
                     <connections>
                         <outlet property="displayLabel" destination="ReG-sM-4xT" id="UKn-cr-fYP"/>
+                        <outlet property="operationLabel" destination="rQD-hT-MrT" id="teC-OS-4w7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="386" y="223"/>
+            <point key="canvasLocation" x="145" y="232"/>
         </scene>
     </scenes>
 </document>
