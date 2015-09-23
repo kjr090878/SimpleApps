@@ -39,10 +39,35 @@ class ViewController: UIViewController {
 
     
     
-    
-    @IBOutlet weak var decimalPoint: UIButton!
-    
-    let decimalPoint = button.titleLabel!.text!
+    @IBAction func pressedDecimal(sender: AnyObject) {
+        
+        // if we have not pressed an operation
+        if operation == nil {
+            
+            // is there a decimal already
+            if number1.rangeOfString(".") != nil { return }
+            
+            // if no numbers pressed add "0" before decimal
+            if number1 == "" { number1 = "0" }
+            
+            number1 += "."
+            displayLabel.text = number1
+            
+        // if we have
+        } else {
+            
+            // is there a decimal already
+            if number2.rangeOfString(".") != nil { return }
+            
+            // if no numbers pressed add "0" before decimal
+            if number2 == "" { number2 = "0" }
+            
+            number2 += "."
+            displayLabel.text = number2
+            
+        }
+        
+    }
 
     
     @IBAction func clear() {

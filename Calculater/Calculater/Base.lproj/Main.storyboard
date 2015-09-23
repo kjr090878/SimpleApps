@@ -278,6 +278,9 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="40"/>
                                 <state key="normal" title="."/>
+                                <connections>
+                                    <action selector="pressedDecimal:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Mdc-8J-mqY"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -362,7 +365,6 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="568"/>
                     <connections>
-                        <outlet property="decimalPoint" destination="jqs-cq-doJ" id="5wA-hp-7ge"/>
                         <outlet property="displayLabel" destination="ReG-sM-4xT" id="UKn-cr-fYP"/>
                         <outlet property="operationLabel" destination="rQD-hT-MrT" id="teC-OS-4w7"/>
                     </connections>
