@@ -37,6 +37,14 @@ class ViewController: UIViewController {
 
     }
 
+    
+    
+    
+    @IBOutlet weak var decimalPoint: UIButton!
+    
+    let decimalPoint = button.titleLabel!.text!
+
+    
     @IBAction func clear() {
         
         number1 = ""
