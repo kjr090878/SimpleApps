@@ -23,8 +23,16 @@ class ViewController: UIViewController {
     var isPlayer1Turn = true
     
     var player1Score = 0
-    var palyer2Score = 0
+    var player2Score = 0
     var stalemateScore = 0
+    
+    let gameStatusLabel = UILabel(frame: CGRect(x: 0, y: 100, width: 200, height: 50))
+    
+    let scoreLabel = UILabel(frame: CGRect(x: 0, y: 50, width: 200, height: 50))
+    
+    let resetScoreButton = UIButton(frame: CGRect(x: 50, y: 550, width: 100, height: 100))
+    
+    let resetGameButton = UIButton(frame: CGRect(x: 260, y: 550, width: 100, height: 100))
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +40,56 @@ class ViewController: UIViewController {
         
         view.backgroundColor = UIColor.whiteColor()
         
+        
+        gameStatusLabel.text = "Player 1 Turn"
+        gameStatusLabel.textAlignment = .Center
+        
+        gameStatusLabel.center.x = view.center.x
+        
+        view.addSubview(gameStatusLabel)
+        
+        scoreLabel.text = "score p1: 0 p2: 0 s: 0"
+        scoreLabel.textAlignment = .Center
+        
+        scoreLabel.center.x = view.center.x
+        
+        view.addSubview(scoreLabel)
+        
+        
+        resetScoreButton.setTitle("Reset", forState: UIControlState.Normal)
+        
+        resetScoreButton.addTarget(self, action: "resetScore", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        resetScoreButton.backgroundColor = UIColor.orangeColor()
+        
+        self.view.addSubview(resetScoreButton)
+        
+        resetGameButton.setTitle("Play Again", forState: UIControlState.Normal)
+        
+        resetGameButton.addTarget(self, action: "resetGame", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        resetGameButton.backgroundColor = UIColor.orangeColor()
+        
+        self.view.addSubview(resetGameButton)
+        
+        scoreLabel.center.x = view.center.x
+        
+        view.addSubview(scoreLabel)
+        
         // grid [0]
+        
+        let screenHeight = Int(UIScreen.mainScreen().bounds.height)
+        let screenWidth = Int(UIScreen.mainScreen().bounds.width)
+        
+        let buttonHW = 100
+        let buttonSpacing = 4
+        
+        
+        let gridHW = (buttonHW * 3) + (buttonSpacing * 2)
+        
+        let leftSpacing = (screenWidth - gridHW) / 2
+        let topSpacing = (screenHeight - gridHW) / 2
+        
         
         for (r,row) in grid.enumerate() {
          
@@ -40,12 +97,12 @@ class ViewController: UIViewController {
             
             for (c,_) in row.enumerate() {
                 
-                let x = c * 110
+                let x = c * (buttonHW + buttonSpacing) + leftSpacing
                 
-                let y = r * 110
+                let y = r * (buttonHW + buttonSpacing) + topSpacing
                 
                 
-                let button = TTTButton(frame: CGRect(x: x, y: y, width: 100, height: 100))
+                let button = TTTButton(frame: CGRect(x: x, y: y, width: buttonHW, height: buttonHW))
                 button.backgroundColor = UIColor.cyanColor()
                 
                 button.row = r
@@ -78,16 +135,25 @@ class ViewController: UIViewController {
     
         
     }
+    
+    func resetScore() {
+        
+        
+    }
+    
+    func resetGame() {
+        
+        
+    }
+    
+    // MARK: Pressed TTTButton
 
     func spacePressed(button: TTTButton) {
         
         if button.player == 0 {
             
 //            if isPlayer1Turn {
-//                
 //                button.player = 1
-//                
-//                
 //            } else {
 //                button.player = 2
 //            }
@@ -98,6 +164,10 @@ class ViewController: UIViewController {
             
             isPlayer1Turn = !isPlayer1Turn
             
+            gameStatusLabel.text = isPlayer1Turn ? "Player 1 Turn" : "Player 2 Turn"
+            
+            resetGameButton.setTitle("End Game", forState: UIControlState.Normal)
+            
             checkForWinner()
             
             
@@ -106,24 +176,31 @@ class ViewController: UIViewController {
         
         print("button works")
     
-        }
+    }
 
     func checkForWinner() {
         
         // r,c
         
-        // row 1 0,0 0,1 0,2
-        // row 2 1,0 1,1 1,2
-        // row 3 2,0 2,1 2,2
-        // col 1 0,0 1,0 2,0
-        // col 2 0,1 1,1 2,1
-        // col 3 0,2 1,2 2,2
-        // dia 1 0,0 1,1 2,2
-        // dia 2 2,0 1,1 0,2
+        // row 1    0,0 0,1 0,2
+        // row 2    1,0 1,1 1,2
+        // row 3    2,0 2,1 2,2
+        // col 1    0,0 1,0 2,0
+        // col 2    0,1 1,1 2,1
+        // col 3    0,2 1,2 2,2
+        // dia 1    0,0 1,1 2,2
+        // dia 2    2,0 1,1 0,2
         
         let possibilities = [
             
-            ((0,0), (0,1), (0,2))
+            ((0,0), (0,1), (0,2)),
+            ((1,0), (1,1), (1,2)),
+            ((2,0), (2,1), (2,2)),
+            ((0,0), (1,0), (2,0)),
+            ((0,1), (1,1), (2,2)),
+            ((1,2), (1,2), (2,2)),
+            ((0,0), (1,1), (2,2)),
+            ((2,0), (1,1), (0,2))
         
         ]
         
@@ -139,13 +216,38 @@ class ViewController: UIViewController {
                 
                 if value1 != 0 {
                     
-                    print("Player \(value1) Wins")
+                    print("Player \(value1) Wins") // Player 1 Wins
+                    
+                    resetGameButton.setTitle("Play Again", forState: UIControlState.Normal)
+                    
+                    // update either player1Score or player2Score based on value1 == 1
+                    
+                    if value1 == 1 {
+                        
+                        player1Score++
+//                        player1Score += 1
+//                        player1Score = player1Score + 1
+                        
+                    } else {
+                        
+                        player2Score++
+                        
+                    }
+                    
+                    // update score label
+                    
+                    scoreLabel.text = "score p1: \(player1Score) p2: \(player2Score) s: 0"
                     
                 } else {
-                    print ("all zeros")
+                    
+                    print("all zeros")
+                    
                 }
+                
             } else {
-                print ("does not match")
+                
+                print("does not match")
+                
             }
         }
         
