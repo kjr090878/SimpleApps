@@ -15,7 +15,6 @@ class ConversationViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-                
         var user: PFUser! {
         
       
@@ -32,7 +31,7 @@ class ConversationViewController: UIViewController {
             messageQuery.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
                 
                 self.messages = objects ?? []
-                // TODO: reload tableView
+                self.tableView.reloadData()
                 
             }
         }
@@ -46,21 +45,60 @@ class ConversationViewController: UIViewController {
 
         // Do any additional setup after loading the view.
     }
+    
+  
+    @IBAction func sendMessage(sender: AnyObject) {
+        
+        guard let content = messageField.text where content != "" else { return }
+        
+        let message = PFObject(className: "Message")
+        
+        message["sender"] = PFUser.currentUser()
+        message["receiver"] = user
+        message["conent"] = content
+        
+        message.saveInBackgroundWithBlock { (succeeded, error) -> Void in
+            
+            // send push to receiver device
+            
+            // Find devices associated with these users
+            let pushQuery = PFInstallation.query()
+            pushQuery?.whereKey("user", equalTo: self.user)
+            
+            // Send push notification to query
+            let push = PFPush()
+            push.setQuery(pushQuery) // Set our Installation query
+            push.setMessage("\(PFUser.currentUser()?.username ?? "") : \(content)")
+            push.sendPushInBackground()
+            
+        }
+        
+        messageField.text = nil
+        
+    }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+}
+
+extension ConversationViewController: UITableViewDataSource {
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return messages.count
+        
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("", forIndexPath: indexPath)
+        
+        let message = messages[indexPath.row]
+        
+        cell.textLabel?.text = message["content"] as? String
+        
+        return cell
+        
     }
-    */
-
+    
+    
+    
 }
