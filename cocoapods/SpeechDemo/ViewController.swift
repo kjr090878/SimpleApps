@@ -55,23 +55,6 @@ class ViewController: UIViewController {
         pvSpeechProgress.alpha = 0.0
         pvSpeechProgress.progress = 0.0
         
-        func animateActionButtonAppearance(shouldHideSpeakButton: Bool) {
-            var speakButtonAlphaValue: CGFloat = 1.0
-            var pauseStopButtonsAlphaValue: CGFloat = 0.0
-            
-            if shouldHideSpeakButton {
-                speakButtonAlphaValue = 0.0
-                pauseStopButtonsAlphaValue = 1.0
-            }
-            
-            UIView.animateWithDuration(0.25, animations: { () -> Void in
-                self.btnSpeak.alpha = speakButtonAlphaValue
-                
-                self.btnPause.alpha = pauseStopButtonsAlphaValue
-                
-                self.btnStop.alpha = pauseStopButtonsAlphaValue
-            })
-        }
         
         
         
@@ -79,6 +62,25 @@ class ViewController: UIViewController {
         let swipeDownGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "handleSwipeDownGesture:")
         swipeDownGestureRecognizer.direction = UISwipeGestureRecognizerDirection.Down
         view.addGestureRecognizer(swipeDownGestureRecognizer)
+    }
+    
+    
+    func animateActionButtonAppearance(shouldHideSpeakButton: Bool) {
+        var speakButtonAlphaValue: CGFloat = 1.0
+        var pauseStopButtonsAlphaValue: CGFloat = 0.0
+        
+        if shouldHideSpeakButton {
+            speakButtonAlphaValue = 0.0
+            pauseStopButtonsAlphaValue = 1.0
+        }
+        
+        UIView.animateWithDuration(0.25, animations: { () -> Void in
+            self.btnSpeak.alpha = speakButtonAlphaValue
+            
+            self.btnPause.alpha = pauseStopButtonsAlphaValue
+            
+            self.btnStop.alpha = pauseStopButtonsAlphaValue
+        })
     }
 
     override func didReceiveMemoryWarning() {
@@ -92,14 +94,12 @@ class ViewController: UIViewController {
     func handleSwipeDownGesture(gestureRecognizer: UISwipeGestureRecognizer) {
         tvEditor.resignFirstResponder()
     }
- 
-
-    
+     
     // MARK: IBAction method implementation
     
     @IBAction func speak(sender: AnyObject) {
 
-        
+        if !speechSynthesizer.speaking {
         let speechUtterance = AVSpeechUtterance(string: tvEditor.text)
         
         speechUtterance.rate = rate
@@ -107,6 +107,12 @@ class ViewController: UIViewController {
         speechUtterance.volume = volume
         
         speechSynthesizer.speakUtterance(speechUtterance)
+        }
+        else{
+            speechSynthesizer.continueSpeaking()
+        }
+        
+        animateActionButtonAppearance(true)
         
     }
     
@@ -116,6 +122,7 @@ class ViewController: UIViewController {
         speechSynthesizer.pauseSpeakingAtBoundary(AVSpeechBoundary.Word)
        
         
+        animateActionButtonAppearance(false)
         
     }
     
@@ -123,7 +130,8 @@ class ViewController: UIViewController {
     @IBAction func stopSpeech(sender: AnyObject) {
         
         speechSynthesizer.stopSpeakingAtBoundary(AVSpeechBoundary.Immediate)
-
+        
+        animateActionButtonAppearance(false)
         
     }
     
