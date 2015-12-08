@@ -316,6 +316,7 @@
 				3DE4EB1C1C108C8F00B0997E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
